@@ -1,0 +1,76 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import {
+  VictoryChart,
+  VictoryZoomContainer,
+  VictoryLine,
+  VictoryBrushContainer,
+  VictoryAxis,
+  VictoryScatter,
+} from 'victory';
+
+class TodayStats extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      zoomDomain: { x: [new Date(2019, 1, 1), new Date(2019, 2, 25)] },
+
+    };
+  }
+
+  handleZoom(domain) {
+    this.setState({ zoomDomain: domain });
+  }
+
+  render() {
+    const tempData = this.props.temps.map(temp => ({a: new Date(temp.timestamp*1000),b: parseFloat(temp.temp)}));
+    const currentDate = new Date();
+    const todayData = tempData.filter(temp =>{
+      return ((temp.a.getFullYear() === currentDate.getFullYear()) && (temp.a.getMonth() === currentDate.getMonth()) && (temp.a.getDate() === currentDate.getDate()));
+    })
+
+    // const testData = [
+    //   { a: new Date(2018, 1, 1), b: 125 },
+    //   { a: new Date(2018, 4, 1), b: 257 },
+    //   { a: new Date(2018, 8, 1), b: 345 },
+    //   { a: new Date(2018, 12, 1), b: 515 },
+    //   { a: new Date(2019, 1, 1), b: 132 },
+    //   { a: new Date(2019, 4, 1), b: 305 },
+    //   { a: new Date(2019, 8, 1), b: 270 },
+    //   { a: new Date(2019, 12, 1), b: 470 }
+    // ];
+    //
+    // console.log(testData);
+
+    return (
+      <div>
+        <VictoryChart width={600} height={470} scale={{ x: "time" }} domain={{ y: [0.0,30.0] }}
+        >
+            <VictoryLine
+              style={{
+                data: { stroke: "tomato" }
+              }}
+              data={ todayData }
+              x="a"
+              y="b"
+            />
+            <VictoryScatter
+              style={{ data: { fill: "#c43a31" } }}
+              size={ todayData.size }
+              data={ todayData }
+              x="a"
+              y="b"
+              />
+
+          </VictoryChart>
+      </div>
+    );
+  }
+}
+
+TodayStats.propTypes = {
+  temps: PropTypes.array.isRequired,
+}
+
+export default TodayStats;
