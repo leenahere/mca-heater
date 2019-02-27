@@ -2,7 +2,30 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Slider from '@material-ui/lab/Slider';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import TextField from '@material-ui/core/TextField';
+
+const muiTheme = createMuiTheme({
+  palette: {
+    primary: { main: '#f76c6c' }, // Purple and green play nicely together.
+    secondary: { main: '#11cb5f' }, // This is just green.A700 as hex.
+  },
+});
+
+const styles = theme => ({
+    textField: {
+        width: '90%',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        paddingBottom: 0,
+        marginTop: 0,
+        fontWeight: 500
+    },
+    input: {
+        color: 'white'
+    }
+});
 
 class Settings extends React.Component {
   state = {
@@ -37,14 +60,28 @@ class Settings extends React.Component {
   render () {
 
     const {valueCurrent, valueDay, valueNight, dayStart, dayEnd, dayStartString, dayEndString} = this.state;
+    const { classes } = this.props;
 
     return(
-      <div style={{padding: '40px'}}>
-        <h3>Aktuelle Temperatur</h3>
-        <div style={{ display: 'flex', padding: '40px', marginLeft: '100px', marginRight: '20px'}}>
-          <p style={{ float: 'left', flex: 1}}>0C</p>
+      <div>
+      <div style={explanStyle}>
+        In den Einstellungen können die verschiedenen Zieltemperaturen eingestellt werden.
+        Die Einstellung der aktuellen Temperatur überschreibt, ja was eigentlich? Vielleicht
+        nehmen wir aktuelle Temp einfach raus, das macht nicht wirklich Sinn.
+        Dabei können Werte von 0&#8451; bis 30&#8451; eingestellt werden. So oft das Wort
+        einstellen. Zusätzlich kann eingestelt werden, von wann bis wann die Temperatur
+        für den Tag gelten soll. Die Zeiten für die Nacht errechnen sich automatisch aus den
+        verbleibenden der 24 Stunden eines Tages, die zumindest in unserer Welt also normal gelten.
+        Um die Einstellungen zu ändern, einfach den Einstellungen ändern Button klicken.
+      </div>
+      <div style={containerStyle}>
+        <div style={settingStyle}>
+          <div style={tagSettingStyle}>
+            <h3>Aktuell</h3>
+            <div style={tempSetFieldStyle}>{(valueCurrent === 0) ? 'Off' : valueCurrent}&#8451;</div>
+          </div>
+          <MuiThemeProvider theme={muiTheme}>
           <Slider
-            style={{ float: 'left', width: '400px', flex: 20 }}
             value={valueCurrent}
             min={0}
             max={30}
@@ -52,16 +89,15 @@ class Settings extends React.Component {
             aria-labelledby="label"
             onChange={this.handleChangeCurrent}
             />
-          <p style={{float: 'left', flex: 1}}>30C</p>
-          <div style={{marginLeft: '20px', flex: 2}}>
-            {(valueCurrent === 0) ? 'Off' : valueCurrent}
-          </div>
+        </MuiThemeProvider>
         </div>
-        <h3>Tag</h3>
-        <div style={{ display: 'flex', padding: '40px', marginLeft: '100px', marginRight: '20px'}}>
-          <p style={{ float: 'left', flex: 1}}>0C</p>
+        <div style={settingStyle} >
+          <div style={tagSettingStyle}>
+            <h3>Tag</h3>
+            <div style={tempSetFieldStyle}>{(valueDay === 0) ? 'Off' : valueDay}&#8451;</div>
+          </div>
+          <MuiThemeProvider theme={muiTheme}>
           <Slider
-            style={{ float: 'left', width: '400px', flex: 20 }}
             value={valueDay}
             min={0}
             max={30}
@@ -69,16 +105,15 @@ class Settings extends React.Component {
             aria-labelledby="label"
             onChange={this.handleChangeDay}
             />
-          <p style={{float: 'left', flex: 1}}>30C</p>
-          <div style={{marginLeft: '20px', flex: 2}}>
-            {(valueDay === 0) ? 'Off' : valueDay}
-          </div>
+          </MuiThemeProvider>
         </div>
-        <h3>Nacht</h3>
-        <div style={{ display: 'flex', padding: '40px', marginLeft: '100px', marginRight: '20px'}}>
-          <p style={{ float: 'left', flex: 1}}>0C</p>
+        <div style={settingStyle}>
+          <div style={tagSettingStyle}>
+            <h3>Nacht</h3>
+            <div style={tempSetFieldStyle}>{(valueNight === 0) ? 'Off' : valueNight }&#8451;</div>
+          </div>
+          <MuiThemeProvider theme={muiTheme}>
           <Slider
-            style={{ float: 'left', width: '400px', flex: 20 }}
             value={valueNight}
             min={0}
             max={30}
@@ -86,12 +121,9 @@ class Settings extends React.Component {
             aria-labelledby="label"
             onChange={this.handleChangeNight}
             />
-          <p style={{float: 'left', flex: 1}}>30C</p>
-          <div style={{marginLeft: '20px', flex: 2}}>
-            {(valueNight === 0) ? 'Off' : valueNight }
-          </div>
+          </MuiThemeProvider>
         </div>
-        <div>
+        <div style={settingStyle}>
           <TextField
             id="time"
             label="Start"
@@ -125,19 +157,63 @@ class Settings extends React.Component {
               }}
               />
         </div>
-        <button style={btnStyle} onClick={this.props.updateTempTargets.bind(this, valueCurrent, valueDay, valueNight, dayStart, dayEnd)}>Submit</button>
+      </div>
+      <div>
+        <button style={btnStyle} onClick={this.props.updateTempTargets.bind(this, valueCurrent, valueDay, valueNight, dayStart, dayEnd)}>Einstellungen ändern</button>
+      </div>
       </div>
     );
   }
 }
 
-const btnStyle = {
-  background: 'red',
+const explanStyle = {
+  background: '#24305E',
   color: 'white',
+  padding: '20px',
+  margin: '20px',
+  textAlign: 'justify',
+  lineHeight: '1.4',
+  fontSize: '14px',
+  boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'
+}
+
+const containerStyle = {
+  display: 'flex',
+  flexFlow: 'row wrap',
+  justifyContent: 'space-around'
+}
+
+const settingStyle = {
+  width: '250px',
+  height: '100px',
+  textAlign: 'center',
+  margin: 'auto'
+}
+
+const btnStyle = {
+  fontSize: '18px',
+  height: '50px',
+  width: '50%',
+  background: '#D79922',
+  color: '#24305E',
   border: 'none',
   padding: '5px 8px',
-  borderRadius: '10%',
+  borderRadius: '10px',
   cursor: 'pointer',
+  boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'
+}
+
+const tempSetFieldStyle = {
+  color: 'white',
+  padding: '3px',
+  backgroundColor: '#a8d0e6',
+  display: 'inline',
+  marginLeft: '10px',
+  boxShadow: '0 2px 3px rgba(0,0,0,0.16), 0 2px 3px rgba(0,0,0,0.23)'
+}
+
+const tagSettingStyle = {
+  marginBottom: '20px',
 }
 
 Settings.propTypes = {

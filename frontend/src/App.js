@@ -6,13 +6,23 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
+import { withStyles } from "@material-ui/core/styles/";
+
 import Header from './components/layout/Header';
 import CurrentTemp from './components/CurrentTemp';
 import Stats from './components/Stats';
 import Settings from './components/Settings';
 import Capacitor from './components/Capacitor';
 
+import ConfettiCanvas from 'react-confetti-canvas';
+
 import './App.css';
+
+const styles = theme => ({
+  indicator: {
+    backgroundColor: "white"
+  }
+});
 
 class App extends Component {
   state = {
@@ -126,6 +136,7 @@ class App extends Component {
 
   render() {
     const { value } = this.state;
+    const { classes } = this.props;
     let content;
 
     if (this.state.loading) {
@@ -134,19 +145,14 @@ class App extends Component {
       content =
           <div className="container">
             <Header />
-              <ul>
-                {this.state.tempTargets.map(hit =>
-                  <li key={hit.id}>
-                    {hit.mode}, {hit.targettemp}
-                  </li>
-                )}
-              </ul>
             <CurrentTemp currTemp={ this.state.currTemp }/>
-            <AppBar position="static">
-              <Tabs value={value} onChange={this.handleChange}>
-                <Tab label="Statistics" />
-                <Tab label="Settings" />
-                <Tab label="Capacitor" />
+            <AppBar style={appBarStyle} position="static">
+              <Tabs value={value}
+                    classes={{ indicator: classes.indicator }}
+                    onChange={this.handleChange}>
+                <Tab disableRipple style={tabStyle} label="Statistics" />
+                <Tab disableRipple style={tabStyle} label="Settings" />
+                <Tab disableRipple style={tabStyle} label="Capacitor" />
               </Tabs>
             </AppBar>
             {value === 0 && <Stats temps={ this.state.temps } />}
@@ -157,12 +163,25 @@ class App extends Component {
 
     return (
       <div className="App">
+        <ConfettiCanvas />
         { content }
       </div>
     );
   }
 }
 
+const appBarStyle = {
+  backgroundColor: '#24305E',
+}
+
+const tabStyle = {
+  fontSize: '20px',
+  color: 'white',
+  fontFamily: 'Helvetica',
+  fontWeight: 'lighter',
+  textTransform: 'capitalize'
+}
 
 
-export default App;
+
+export default withStyles(styles)(App);

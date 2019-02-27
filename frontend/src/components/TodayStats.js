@@ -42,18 +42,18 @@ class TodayStats extends React.Component {
 
     return (
       <div>
-        <VictoryChart width={600} height={470} scale={{ x: "time" }} domain={{ y: [0.0,30.0] }}
+        <VictoryChart width={900} height={470} scale={{ x: "time" }} domain={{ y: [0.0,30.0] }}
         >
             <VictoryLine
               style={{
-                data: { stroke: "tomato" }
+                data: { stroke: "#f76c6c" }
               }}
               data={ todayData }
               x="a"
               y="b"
             />
             <VictoryScatter
-              style={{ data: { fill: "#c43a31" } }}
+              style={{ data: { fill: "#f76c6c" } }}
               size={ todayData.size }
               data={ todayData }
               x="a"

@@ -9,6 +9,13 @@ import AllStats from './AllStats';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import { withStyles } from "@material-ui/core/styles/";
+
+const styles = theme => ({
+  indicator: {
+    backgroundColor: "white"
+  }
+});
 
 class Stats extends React.Component {
   state = {
@@ -21,15 +28,16 @@ class Stats extends React.Component {
 
   render() {
     const { value } = this.state;
+    const { classes } = this.props;
 
     return (
       <div>
-        <AppBar position="static">
-          <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="Today" />
-            <Tab label="Last 7 Days" />
-            <Tab label="Last Month" />
-            <Tab label="All" />
+        <AppBar style={appBarStyle} position="static">
+          <Tabs value={value} classes={{ indicator: classes.indicator }} onChange={this.handleChange}>
+            <Tab disableRipple style={tabStyle} label="Today" />
+            <Tab disableRipple style={tabStyle} label="Last 7 Days" />
+            <Tab disableRipple style={tabStyle} label="Last Month" />
+            <Tab disableRipple style={tabStyle} label="All" />
           </Tabs>
         </AppBar>
         {value === 0 && <TodayStats temps={ this.props.temps } />}
@@ -41,8 +49,20 @@ class Stats extends React.Component {
   }
 }
 
+const appBarStyle = {
+  backgroundColor: '#374785',
+}
+
+const tabStyle = {
+  fontSize: '16px',
+  fontWeight: 'lighter',
+  color: 'white',
+  fontFamily: 'Helvetica',
+  textTransform: 'capitalize'
+}
+
 Stats.propTypes = {
   temps: PropTypes.array.isRequired,
 }
 
-export default Stats;
+export default withStyles(styles)(Stats);

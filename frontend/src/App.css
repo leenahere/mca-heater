@@ -5,8 +5,9 @@
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Helvetica;
   line-height: 1.4;
+  background: #e3e2df;
 }
 
 a {
@@ -16,6 +17,16 @@ a {
 
 .container {
   padding: 0 1rem;
+}
+
+h1 {
+  color: white;
+}
+
+h3 {
+  display: inline;
+  font-weight: lighter;
+  color: #24305E;
 }
 
 .btn {

@@ -38,7 +38,7 @@ class AllStats extends React.Component {
         >
             <VictoryLine
               style={{
-                data: { stroke: "tomato" }
+                data: { stroke: "#f76c6c" }
               }}
               data={ tempData }
               x="a"
@@ -62,7 +62,7 @@ class AllStats extends React.Component {
             />
             <VictoryLine
               style={{
-                data: { stroke: "tomato" }
+                data: { stroke: "#f76c6c" }
               }}
               data={ tempData }
               x="a"

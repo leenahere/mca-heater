@@ -37,7 +37,7 @@ class LastMonthStats extends React.Component {
         <VictoryChart width={900} height={470} scale={{ x: "time" }} domain={{ y: [0.0,30.0] }}>
             <VictoryLine
               style={{
-                data: { stroke: "tomato" },
+                data: { stroke: "#f76c6c" },
                 labels: {display: "none"}
               }}
               data={ monthData }
@@ -47,7 +47,7 @@ class LastMonthStats extends React.Component {
             <VictoryScatter
               labels={(d) => `${d.a.getDate()}.${d.a.getMonth()+1}\n${d.a.getHours()} Uhr\n${d.b} C`}
               labelComponent={<VictoryTooltip/>}
-              style={{ data: { fill: "#c43a31" }
+              style={{ data: { fill: "#f76c6c" }
                     }}
               size={ monthData.size }
               data={ monthData }

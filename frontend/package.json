@@ -9,10 +9,13 @@
     "canvasjs": "^1.8.1",
     "react": "^16.8.1",
     "react-addons-update": "^15.6.2",
+    "react-confetti": "^2.3.0",
+    "react-confetti-canvas": "^1.0.1",
     "react-dom": "^16.8.1",
     "react-native-svg": "^9.2.4",
     "react-scripts": "2.1.5",
     "react-swipeable-views": "^0.13.1",
+    "typeface-roboto": "0.0.54",
     "victory": "^31.3.0",
     "victory-native": "^31.0.0"
   },
