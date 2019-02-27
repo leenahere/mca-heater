@@ -112,6 +112,10 @@ func UpdateTargetTempEndPoint(w http.ResponseWriter, r *http.Request) {
 // }
 //
 
+func handlePreflight(w http.ResponseWriter, r *http.Request) {
+	respondWithJson(w, http.StatusOK, map[string]string{"result": "OK"})
+}
+
 // respondWithError responds with JSON error
 func respondWithError(w http.ResponseWriter, code int, msg string) {
 	respondWithJson(w, code, map[string]string{"error": msg})
@@ -121,7 +125,9 @@ func respondWithError(w http.ResponseWriter, code int, msg string) {
 func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
 	response, _ := json.Marshal(payload)
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "GET,POST")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET,POST,PUT,OPTIONS")
+	//w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
 	w.Write(response)
@@ -139,6 +145,7 @@ func init() {
 // main defines HTTP request routes
 func main() {
 	r := mux.NewRouter()
+	r.HandleFunc("/targets", handlePreflight).Methods("OPTIONS")
 	r.HandleFunc("/heater", AllTempsEndPoint).Methods("GET")
 	r.HandleFunc("/heater", CreateTempEndPoint).Methods("POST")
 	r.HandleFunc("/targets", AllTargetTempsEndPoint).Methods("GET")
