@@ -7,8 +7,6 @@ import {
   VictoryLine,
   VictoryBrushContainer,
   VictoryAxis,
-  VictoryScatter,
-  VictoryTooltip,
 } from 'victory';
 
 class AllStats extends React.Component {

@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 
 import {
   VictoryChart,
-  VictoryZoomContainer,
   VictoryLine,
-  VictoryBrushContainer,
-  VictoryAxis,
   VictoryScatter,
   VictoryTooltip,
 } from 'victory';

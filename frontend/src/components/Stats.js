@@ -9,18 +9,6 @@ import AllStats from './AllStats';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-
-import victory from 'victory';
-
-import {
-  VictoryChart,
-  VictoryZoomContainer,
-  VictoryLine,
-  VictoryBrushContainer,
-  VictoryAxis,
-  VictoryScatter,
-} from 'victory';
 
 class Stats extends React.Component {
   state = {

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import axios from 'axios';
+import update from 'react-addons-update';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 
 import Header from './components/layout/Header';
 import CurrentTemp from './components/CurrentTemp';
@@ -64,9 +63,17 @@ class App extends Component {
     })
     .then(res => console.log(res))
 
-    this.state.tempTargets[0].targettemp = valueCurrent;
-    this.state.tempTargets[1].targettemp = valueDay;
-    this.state.tempTargets[2].targettemp = valueNight;
+    this.setState({
+      tempTargets: update(this.state.tempTargets, {0: {targettemp: {$set: valueCurrent}}})
+    })
+
+    this.setState({
+      tempTargets: update(this.state.tempTargets, {1: {targettemp: {$set: valueDay}}})
+    })
+
+    this.setState({
+      tempTargets: update(this.state.tempTargets, {2: {targettemp: {$set: valueNight}}})
+    })
 
     var dayid = ""+this.state.daySettings[0].id;
     var start = ""+dayStart;
@@ -79,8 +86,9 @@ class App extends Component {
     })
     .then(res => console.log(res))
 
-    this.state.daySettings[0].daystart = dayStart;
-    this.state.daySettings[0].dayend = dayEnd;
+    this.setState({
+      daySettings: update(this.state.daySettings, {0: {daystart: {$set: dayStart}, dayend: {$set: dayEnd}}})
+    })
   }
 
   componentDidMount() {
@@ -89,7 +97,7 @@ class App extends Component {
         .then(res => this.setState({
           temps: res.data,
           currTemp: res.data.find(function(o){
-            return o.timestamp == Math.max.apply(Math, res.data.map(function(o) {
+            return o.timestamp = Math.max.apply(Math, res.data.map(function(o) {
                 return o.timestamp;
               }))
             }).temp,

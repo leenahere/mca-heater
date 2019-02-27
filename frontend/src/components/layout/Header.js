@@ -15,8 +15,4 @@ const headerStyle = {
   padding: '10px'
 }
 
-const linkStyle = {
-  color: 'white'
-}
-
 export default Header;
