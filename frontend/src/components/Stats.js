@@ -38,10 +38,10 @@ class Stats extends React.Component {
       <div>
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="Item One" />
-            <Tab label="Item Two" />
-            <Tab label="Item Three" />
-            <Tab label="Item Four" />
+            <Tab label="Today" />
+            <Tab label="Last 7 Days" />
+            <Tab label="Last Month" />
+            <Tab label="All" />
           </Tabs>
         </AppBar>
         {value === 0 && <TodayStats temps={ this.props.temps } />}

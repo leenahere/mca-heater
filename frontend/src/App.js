@@ -11,6 +11,7 @@ import Header from './components/layout/Header';
 import CurrentTemp from './components/CurrentTemp';
 import Stats from './components/Stats';
 import Settings from './components/Settings';
+import Capacitor from './components/Capacitor';
 
 import './App.css';
 
@@ -112,14 +113,14 @@ class App extends Component {
             <CurrentTemp currTemp={ this.state.currTemp }/>
             <AppBar position="static">
               <Tabs value={value} onChange={this.handleChange}>
-                <Tab label="Item One" />
-                <Tab label="Item Two" />
-                <Tab label="Item Three" />
+                <Tab label="Statistics" />
+                <Tab label="Settings" />
+                <Tab label="Capacitor" />
               </Tabs>
             </AppBar>
             {value === 0 && <Stats temps={ this.state.temps } />}
             {value === 1 && <Settings updateTempTargets={ this.updateTempTargets } tempTargets={ this.state.tempTargets} />}
-            {value === 2 && <h1>HEEEY 2</h1>}
+            {value === 2 && <Capacitor />}
           </div>;
     }
 

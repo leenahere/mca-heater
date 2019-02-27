@@ -45,7 +45,7 @@ class Settings extends React.Component {
             />
           <p style={{float: 'left', flex: 1}}>30C</p>
           <div style={{marginLeft: '20px', flex: 2}}>
-            {valueCurrent}
+            {(valueCurrent === 0) ? 'Off' : valueCurrent}
           </div>
         </div>
         <h3>Tag</h3>
@@ -62,7 +62,7 @@ class Settings extends React.Component {
             />
           <p style={{float: 'left', flex: 1}}>30C</p>
           <div style={{marginLeft: '20px', flex: 2}}>
-            {valueDay}
+            {(valueDay === 0) ? 'Off' : valueDay}
           </div>
         </div>
         <h3>Nacht</h3>
@@ -79,7 +79,7 @@ class Settings extends React.Component {
             />
           <p style={{float: 'left', flex: 1}}>30C</p>
           <div style={{marginLeft: '20px', flex: 2}}>
-            {valueNight}
+            {(valueNight === 0) ? 'Off' : valueNight }
           </div>
         </div>
 
