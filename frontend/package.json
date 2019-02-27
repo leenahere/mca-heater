@@ -12,6 +12,7 @@
     "react-confetti": "^2.3.0",
     "react-confetti-canvas": "^1.0.1",
     "react-dom": "^16.8.1",
+    "react-dom-confetti": "^0.1.0",
     "react-native-svg": "^9.2.4",
     "react-scripts": "2.1.5",
     "react-swipeable-views": "^0.13.1",

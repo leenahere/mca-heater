@@ -14,7 +14,7 @@ import Stats from './components/Stats';
 import Settings from './components/Settings';
 import Capacitor from './components/Capacitor';
 
-import ConfettiCanvas from 'react-confetti-canvas';
+import Confetti from 'react-dom-confetti';
 
 import './App.css';
 
@@ -24,6 +24,19 @@ const styles = theme => ({
   }
 });
 
+const config = {
+  angle: 90,
+  spread: 45,
+  startVelocity: 45,
+  elementCount: 50,
+  dragFriction: 0.1,
+  duration: 10000,
+  delay: 0,
+  width: "10px",
+  height: "10px",
+  colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
+};
+
 class App extends Component {
   state = {
     loading: true,
@@ -31,11 +44,18 @@ class App extends Component {
     tempTargets: [],
     daySettings: [],
     currTemp: null,
-    value: 1
+    value: 1,
+    party: false,
   }
 
   handleChange = (event, value) => {
     this.setState({ value });
+  };
+
+  onParty = (event) => {
+    var currentParty = this.state.party;
+    currentParty = !currentParty
+    this.setState({ party: currentParty});
   };
 
   // Very yucky solution, but it works. Would be better to change data model for targets in database
@@ -145,6 +165,10 @@ class App extends Component {
       content =
           <div className="container">
             <Header />
+            <div style={partyStyle}>
+              <Confetti active={ this.state.party } config={ config }/>
+              <button onClick={this.onParty}>Party Button</button>
+            </div>
             <CurrentTemp currTemp={ this.state.currTemp }/>
             <AppBar style={appBarStyle} position="static">
               <Tabs value={value}
@@ -163,7 +187,6 @@ class App extends Component {
 
     return (
       <div className="App">
-        <ConfettiCanvas />
         { content }
       </div>
     );
@@ -172,6 +195,11 @@ class App extends Component {
 
 const appBarStyle = {
   backgroundColor: '#24305E',
+}
+
+const partyStyle = {
+  marginLeft: '100px',
+  marginRight: '100px',
 }
 
 const tabStyle = {
