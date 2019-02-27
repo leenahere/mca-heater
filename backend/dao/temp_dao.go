@@ -25,6 +25,10 @@ const (
 	TARGETCOLLECTION = "targets"
 )
 
+const (
+	DAYCOLLECTION = "daysettings"
+)
+
 // Connect establishes a connection to database
 func (m *TempDAO) Connect() {
 	session, err := mgo.Dial(m.Server)
@@ -53,9 +57,21 @@ func (m *TempDAO) InsertTarget(targettemp TargetTemp) error {
 	return err
 }
 
+// InsertDay inserts daytime settings into database
+func (m *TempDAO) InsertDay(daynight DayNight) error {
+	err := db.C(DAYCOLLECTION).Insert(&daynight)
+	return err
+}
+
 // Update updates target temperature in database
 func (m *TempDAO) Update(targettemp TargetTemp) error {
 	err := db.C(TARGETCOLLECTION).UpdateId(targettemp.ID, &targettemp)
+	return err
+}
+
+// UpdateDay updates daytime settings in database
+func (m *TempDAO) UpdateDay(daynight DayNight) error {
+	err := db.C(DAYCOLLECTION).UpdateId(daynight.ID, &daynight)
 	return err
 }
 
@@ -64,6 +80,13 @@ func (m *TempDAO) FindTargets() ([]TargetTemp, error) {
 	var targettemps []TargetTemp
 	err := db.C(TARGETCOLLECTION).Find(bson.M{}).All(&targettemps)
 	return targettemps, err
+}
+
+// FindDay finds current daytime settings
+func (m *TempDAO) FindDay() ([]DayNight, error) {
+	var daynight []DayNight
+	err := db.C(DAYCOLLECTION).Find(bson.M{}).All(&daynight)
+	return daynight, err
 }
 
 // // Find a movie by its id

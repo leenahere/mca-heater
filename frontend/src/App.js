@@ -20,6 +20,7 @@ class App extends Component {
     loading: true,
     temps: [],
     tempTargets: [],
+    daySettings: [],
     currTemp: null,
     value: 1
   }
@@ -29,7 +30,7 @@ class App extends Component {
   };
 
   // Very yucky solution, but it works. Would be better to change data model for targets in database
-  updateTempTargets = (valueCurrent, valueDay, valueNight) => {
+  updateTempTargets = (valueCurrent, valueDay, valueNight, dayStart, dayEnd) => {
     var targetid = ""+this.state.tempTargets[0].id;
     var target = ""+valueCurrent;
     var modus = ""+this.state.tempTargets[0].mode;
@@ -52,9 +53,9 @@ class App extends Component {
     })
     .then(res => console.log(res))
 
-    var targetid = ""+this.state.tempTargets[2].id;
-    var target = ""+valueNight;
-    var modus = ""+this.state.tempTargets[2].mode;
+    targetid = ""+this.state.tempTargets[2].id;
+    target = ""+valueNight;
+    modus = ""+this.state.tempTargets[2].mode;
 
     axios.put('http://localhost:3000/targets', {
       "id": targetid,
@@ -66,6 +67,20 @@ class App extends Component {
     this.state.tempTargets[0].targettemp = valueCurrent;
     this.state.tempTargets[1].targettemp = valueDay;
     this.state.tempTargets[2].targettemp = valueNight;
+
+    var dayid = ""+this.state.daySettings[0].id;
+    var start = ""+dayStart;
+    var end = ""+dayEnd;
+
+    axios.put('http://localhost:3000/daysettings', {
+      "id": dayid,
+      "daystart": start,
+      "dayend": end
+    })
+    .then(res => console.log(res))
+
+    this.state.daySettings[0].daystart = dayStart;
+    this.state.daySettings[0].dayend = dayEnd;
   }
 
   componentDidMount() {
@@ -87,6 +102,14 @@ class App extends Component {
     axios.get('http://localhost:3000/targets')
     .then(res => this.setState({
       tempTargets: res.data,
+    }))
+    .catch(error => {
+      console.log(error);
+    });
+
+    axios.get('http://localhost:3000/daysettings')
+    .then(res => this.setState({
+      daySettings: res.data,
     }))
     .catch(error => {
       console.log(error);
@@ -119,7 +142,7 @@ class App extends Component {
               </Tabs>
             </AppBar>
             {value === 0 && <Stats temps={ this.state.temps } />}
-            {value === 1 && <Settings updateTempTargets={ this.updateTempTargets } tempTargets={ this.state.tempTargets} />}
+            {value === 1 && <Settings updateTempTargets={ this.updateTempTargets } tempTargets={ this.state.tempTargets} daySettings= {this.state.daySettings}/>}
             {value === 2 && <Capacitor />}
           </div>;
     }

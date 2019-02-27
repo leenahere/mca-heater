@@ -83,6 +83,47 @@ func UpdateTargetTempEndPoint(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
 }
 
+// AllTargetTempsEndPoint gets a list of all target temperatures
+func AllDaySettingsEndPoint(w http.ResponseWriter, r *http.Request) {
+	daysettings, err := dao.FindDay()
+	if err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	respondWithJson(w, http.StatusOK, daysettings)
+}
+
+// CreateTargetTempEndPoint posts a new target temperature
+func CreateDaySettingsEndPoint(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	var daysettings DayNight
+	if err := json.NewDecoder(r.Body).Decode(&daysettings); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	daysettings.ID = bson.NewObjectId()
+	if err := dao.InsertDay(daysettings); err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	respondWithJson(w, http.StatusCreated, daysettings)
+}
+
+// UpdateTargetTempEndPoint puts updated information on target temperature
+func UpdateDaySettingsEndPoint(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	var daysettings DayNight
+	if err := json.NewDecoder(r.Body).Decode(&daysettings); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	if err := dao.UpdateDay(daysettings); err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
+}
+
 // // GET a movie by its ID
 // func FindMovieEndpoint(w http.ResponseWriter, r *http.Request) {
 // 	params := mux.Vars(r)
@@ -146,11 +187,15 @@ func init() {
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/targets", handlePreflight).Methods("OPTIONS")
+	r.HandleFunc("/daysettings", handlePreflight).Methods("OPTIONS")
 	r.HandleFunc("/heater", AllTempsEndPoint).Methods("GET")
 	r.HandleFunc("/heater", CreateTempEndPoint).Methods("POST")
 	r.HandleFunc("/targets", AllTargetTempsEndPoint).Methods("GET")
 	r.HandleFunc("/targets", CreateTargetTempEndPoint).Methods("POST")
 	r.HandleFunc("/targets", UpdateTargetTempEndPoint).Methods("PUT")
+	r.HandleFunc("/daysettings", AllDaySettingsEndPoint).Methods("GET")
+	r.HandleFunc("/daysettings", CreateDaySettingsEndPoint).Methods("POST")
+	r.HandleFunc("/daysettings", UpdateDaySettingsEndPoint).Methods("PUT")
 	// r.HandleFunc("/movies", DeleteMovieEndPoint).Methods("DELETE")
 	// r.HandleFunc("/movies/{id}", FindMovieEndpoint).Methods("GET")
 	if err := http.ListenAndServe(":3000", r); err != nil {
