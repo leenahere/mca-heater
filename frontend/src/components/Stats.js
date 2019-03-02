@@ -13,7 +13,7 @@ import { withStyles } from "@material-ui/core/styles/";
 
 const styles = theme => ({
   indicator: {
-    backgroundColor: "white"
+    backgroundColor: '#f76c6c'
   }
 });
 
@@ -34,8 +34,8 @@ class Stats extends React.Component {
       <div>
         <AppBar style={appBarStyle} position="static">
           <Tabs value={value} classes={{ indicator: classes.indicator }} onChange={this.handleChange}>
-            <Tab disableRipple style={tabStyle} label="Today" />
-            <Tab disableRipple style={tabStyle} label="Last 7 Days" />
+            <Tab disableRipple style={tabAddStyle} label="Today" />
+            <Tab disableRipple style={tabStyle} label="Last Week" />
             <Tab disableRipple style={tabStyle} label="Last Month" />
             <Tab disableRipple style={tabStyle} label="All" />
           </Tabs>
@@ -50,14 +50,26 @@ class Stats extends React.Component {
 }
 
 const appBarStyle = {
-  backgroundColor: '#374785',
+  marginTop: '20px',
+  backgroundColor: '#e3e2df',
+  boxShadow: 'none',
 }
 
 const tabStyle = {
   fontSize: '16px',
+  color: '#666666',
   fontWeight: 'lighter',
-  color: 'white',
-  fontFamily: 'Helvetica',
+  borderWidth: '1px 1px 1px 0px',
+  borderStyle: 'solid',
+  textTransform: 'capitalize'
+}
+
+const tabAddStyle = {
+  fontSize: '16px',
+  color: '#666666',
+  fontWeight: 'lighter',
+  borderWidth: '1px 1px 1px 1px',
+  borderStyle: 'solid',
   textTransform: 'capitalize'
 }
 

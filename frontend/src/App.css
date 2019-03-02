@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Quattrocento+Sans');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,7 +7,10 @@
 }
 
 body {
-  font-family: Helvetica;
+  margin: auto;
+  max-width: 960px;
+  color: #666666;
+  font-family: 'Quattrocento Sans';
   line-height: 1.4;
   background: #e3e2df;
 }
@@ -19,14 +24,10 @@ a {
   padding: 0 1rem;
 }
 
-h1 {
-  color: white;
-}
 
 h3 {
   display: inline;
   font-weight: lighter;
-  color: #24305E;
 }
 
 .btn {

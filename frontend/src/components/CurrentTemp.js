@@ -5,28 +5,25 @@ class CurrentTemp extends React.Component {
 
   render () {
     return (
-      <div style={{display: 'flex'}}>
-        <div style={{flex: 30}}>
-        </div>
         <div style={currentTempStyle}>
-          <h3>Aktuelle Temperatur</h3>
-          <p>{ this.props.currTemp }&#8451;</p>
+          It's <div style={numberStyle}>{ this.props.currTemp }&#8451;</div> in your home right now.
         </div>
-        <div style={{flex: 30}}>
-        </div>
-      </div>
     );
   }
 }
 
 const currentTempStyle = {
-  flex: '40',
-  backgroundColor: '#D79922',
-  color: 'white',
+  display: 'inline-block',
   textAlign: 'center',
-  padding: '20px',
   margin: '20px',
-  boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'
+  fontSize: '30px'
+}
+
+const numberStyle = {
+  display: 'inline-block',
+  color: '#f76c6c',
+  boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+  padding: '5px', backgroundColor: 'rgba(256, 256, 256, 0.8)'
 }
 
 CurrentTemp.propTypes = {

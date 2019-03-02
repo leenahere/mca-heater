@@ -13,29 +13,15 @@ import CurrentTemp from './components/CurrentTemp';
 import Stats from './components/Stats';
 import Settings from './components/Settings';
 import Capacitor from './components/Capacitor';
-
-import Confetti from 'react-dom-confetti';
+import Party from './components/Party';
 
 import './App.css';
 
 const styles = theme => ({
   indicator: {
-    backgroundColor: "white"
+    backgroundColor: '#f76c6c'
   }
 });
-
-const config = {
-  angle: 90,
-  spread: 45,
-  startVelocity: 45,
-  elementCount: 50,
-  dragFriction: 0.1,
-  duration: 10000,
-  delay: 0,
-  width: "10px",
-  height: "10px",
-  colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
-};
 
 class App extends Component {
   state = {
@@ -44,7 +30,7 @@ class App extends Component {
     tempTargets: [],
     daySettings: [],
     currTemp: null,
-    value: 1,
+    value: 2,
     party: false,
   }
 
@@ -164,24 +150,24 @@ class App extends Component {
     } else {
       content =
           <div className="container">
-            <Header />
-            <div style={partyStyle}>
-              <Confetti active={ this.state.party } config={ config }/>
-              <button onClick={this.onParty}>Party Button</button>
+            <div style={{textAlign:'center'}}>
+              <CurrentTemp currTemp={ this.state.currTemp }/>
+              <Party party={ this.state.party } updateParty={ this.onParty }/>
             </div>
-            <CurrentTemp currTemp={ this.state.currTemp }/>
             <AppBar style={appBarStyle} position="static">
               <Tabs value={value}
                     classes={{ indicator: classes.indicator }}
                     onChange={this.handleChange}>
                 <Tab disableRipple style={tabStyle} label="Statistics" />
+                <Tab disableRipple style={tabStyle} label="Expenditure & Costs" />
                 <Tab disableRipple style={tabStyle} label="Settings" />
                 <Tab disableRipple style={tabStyle} label="Capacitor" />
               </Tabs>
             </AppBar>
             {value === 0 && <Stats temps={ this.state.temps } />}
-            {value === 1 && <Settings updateTempTargets={ this.updateTempTargets } tempTargets={ this.state.tempTargets} daySettings= {this.state.daySettings}/>}
-            {value === 2 && <Capacitor />}
+            {value === 1 && <h1>HI</h1>}
+            {value === 2 && <Settings updateTempTargets={ this.updateTempTargets } tempTargets={ this.state.tempTargets} daySettings= {this.state.daySettings}/>}
+            {value === 3 && <Capacitor />}
           </div>;
     }
 
@@ -194,18 +180,13 @@ class App extends Component {
 }
 
 const appBarStyle = {
-  backgroundColor: '#24305E',
-}
-
-const partyStyle = {
-  marginLeft: '100px',
-  marginRight: '100px',
+  backgroundColor: '#e3e2df',
+  boxShadow: 'none',
 }
 
 const tabStyle = {
   fontSize: '20px',
-  color: 'white',
-  fontFamily: 'Helvetica',
+  color: '#666666',
   fontWeight: 'lighter',
   textTransform: 'capitalize'
 }

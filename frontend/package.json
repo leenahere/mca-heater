@@ -16,6 +16,7 @@
     "react-native-svg": "^9.2.4",
     "react-scripts": "2.1.5",
     "react-swipeable-views": "^0.13.1",
+    "react-switch": "^4.1.0",
     "typeface-roboto": "0.0.54",
     "victory": "^31.3.0",
     "victory-native": "^31.0.0"

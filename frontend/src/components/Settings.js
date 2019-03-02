@@ -64,20 +64,10 @@ class Settings extends React.Component {
 
     return(
       <div>
-      <div style={explanStyle}>
-        In den Einstellungen können die verschiedenen Zieltemperaturen eingestellt werden.
-        Die Einstellung der aktuellen Temperatur überschreibt, ja was eigentlich? Vielleicht
-        nehmen wir aktuelle Temp einfach raus, das macht nicht wirklich Sinn.
-        Dabei können Werte von 0&#8451; bis 30&#8451; eingestellt werden. So oft das Wort
-        einstellen. Zusätzlich kann eingestelt werden, von wann bis wann die Temperatur
-        für den Tag gelten soll. Die Zeiten für die Nacht errechnen sich automatisch aus den
-        verbleibenden der 24 Stunden eines Tages, die zumindest in unserer Welt also normal gelten.
-        Um die Einstellungen zu ändern, einfach den Einstellungen ändern Button klicken.
-      </div>
       <div style={containerStyle}>
         <div style={settingStyle}>
           <div style={tagSettingStyle}>
-            <h3>Aktuell</h3>
+            <h3>Current</h3>
             <div style={tempSetFieldStyle}>{(valueCurrent === 0) ? 'Off' : valueCurrent}&#8451;</div>
           </div>
           <MuiThemeProvider theme={muiTheme}>
@@ -93,7 +83,7 @@ class Settings extends React.Component {
         </div>
         <div style={settingStyle} >
           <div style={tagSettingStyle}>
-            <h3>Tag</h3>
+            <h3>Day</h3>
             <div style={tempSetFieldStyle}>{(valueDay === 0) ? 'Off' : valueDay}&#8451;</div>
           </div>
           <MuiThemeProvider theme={muiTheme}>
@@ -109,7 +99,7 @@ class Settings extends React.Component {
         </div>
         <div style={settingStyle}>
           <div style={tagSettingStyle}>
-            <h3>Nacht</h3>
+            <h3>Night</h3>
             <div style={tempSetFieldStyle}>{(valueNight === 0) ? 'Off' : valueNight }&#8451;</div>
           </div>
           <MuiThemeProvider theme={muiTheme}>
@@ -158,8 +148,18 @@ class Settings extends React.Component {
               />
         </div>
       </div>
+      <div style={explanStyle}>
+        In den Einstellungen können die verschiedenen Zieltemperaturen eingestellt werden.
+        Die Einstellung der aktuellen Temperatur überschreibt, ja was eigentlich? Vielleicht
+        nehmen wir aktuelle Temp einfach raus, das macht nicht wirklich Sinn.
+        Dabei können Werte von 0&#8451; bis 30&#8451; eingestellt werden. So oft das Wort
+        einstellen. Zusätzlich kann eingestelt werden, von wann bis wann die Temperatur
+        für den Tag gelten soll. Die Zeiten für die Nacht errechnen sich automatisch aus den
+        verbleibenden der 24 Stunden eines Tages, die zumindest in unserer Welt also normal gelten.
+        Um die Einstellungen zu ändern, einfach den Einstellungen ändern Button klicken.
+      </div>
       <div>
-        <button style={btnStyle} onClick={this.props.updateTempTargets.bind(this, valueCurrent, valueDay, valueNight, dayStart, dayEnd)}>Einstellungen ändern</button>
+        <button style={btnStyle} onClick={this.props.updateTempTargets.bind(this, valueCurrent, valueDay, valueNight, dayStart, dayEnd)}>Apply</button>
       </div>
       </div>
     );
@@ -167,17 +167,15 @@ class Settings extends React.Component {
 }
 
 const explanStyle = {
-  background: '#24305E',
-  color: 'white',
   padding: '20px',
-  margin: '20px',
   textAlign: 'justify',
   lineHeight: '1.4',
-  fontSize: '14px',
-  boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'
+  fontSize: '13px',
+  color: '#8e8e8e'
 }
 
 const containerStyle = {
+  marginTop: '30px',
   display: 'flex',
   flexFlow: 'row wrap',
   justifyContent: 'space-around'
@@ -191,16 +189,15 @@ const settingStyle = {
 }
 
 const btnStyle = {
-  fontSize: '18px',
-  height: '50px',
-  width: '50%',
-  background: '#D79922',
-  color: '#24305E',
+  margin: 'auto',
+  display: 'block',
+  color: 'white',
+  fontSize: '20px',
+  background: '#a8d0e6',
   border: 'none',
   padding: '5px 8px',
   borderRadius: '10px',
   cursor: 'pointer',
-  boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'
 }
 
 const tempSetFieldStyle = {
@@ -209,7 +206,6 @@ const tempSetFieldStyle = {
   backgroundColor: '#a8d0e6',
   display: 'inline',
   marginLeft: '10px',
-  boxShadow: '0 2px 3px rgba(0,0,0,0.16), 0 2px 3px rgba(0,0,0,0.23)'
 }
 
 const tagSettingStyle = {
