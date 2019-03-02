@@ -22,14 +22,18 @@ class LastMonthStats extends React.Component {
   }
 
   render() {
-    const tempData = this.props.temps.map(temp => ({a: new Date(temp.timestamp*1000),b: parseFloat(temp.temp)}));
+    const tempData = this.props.temps.map(temp => ({a: temp.timestamp*1000,b: parseFloat(temp.temp)}));
     const currentDate = new Date();
-    const monthData = tempData.filter(temp =>{
-      return ((temp.a.getFullYear() === currentDate.getFullYear()) &&
-              (temp.a.getMonth() === currentDate.getMonth()) &&
-              ((temp.a.getHours() === 8) || (temp.a.getHours() === 20)) &&
-              (temp.a.getMinutes() === 0)
-            );
+    const currentDateTimestamp = currentDate.getTime();
+    const timesstampLastMonth = currentDateTimestamp - (30 * 24 * 60 * 60 * 1000);
+    const lastMonthDataTimestamp = tempData.filter(temp =>{
+      return (timesstampLastMonth <= temp.a);
+    });
+    const lastMonthDataAll = lastMonthDataTimestamp.map(temp =>({a: new Date(temp.a), b: temp.b}));
+    const monthData = lastMonthDataAll.filter(temp => {
+      return(
+        ((temp.a.getHours() % 4) === 0) && (temp.a.getMinutes() === 0)
+      );
     })
 
     return (

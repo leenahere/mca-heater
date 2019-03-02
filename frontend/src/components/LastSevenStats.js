@@ -22,15 +22,18 @@ class LastSevenStats extends React.Component {
   }
 
   render() {
-    const tempData = this.props.temps.map(temp => ({a: new Date(temp.timestamp*1000),b: parseFloat(temp.temp)}));
+    const tempData = this.props.temps.map(temp => ({a: temp.timestamp*1000,b: parseFloat(temp.temp)}));
     const currentDate = new Date();
-    const sevenDaysData = tempData.filter(temp =>{
-      return ((temp.a.getFullYear() === currentDate.getFullYear()) &&
-              (temp.a.getMonth() === currentDate.getMonth()) &&
-              (temp.a.getDate() >= (currentDate.getDate()-7)) &&
-              ((temp.a.getHours() === 0) || (temp.a.getHours() === 6) || (temp.a.getHours() === 12) || (temp.a.getHours() === 18) || (temp.a.getHours() === 23)) &&
-              (temp.a.getMinutes() === 0)
-            );
+    const currentDateTimestamp = currentDate.getTime();
+    const timestampSevenDays = currentDateTimestamp - (7 * 24 * 60 * 60 * 1000);
+    const sevenDaysDataTimestamp = tempData.filter(temp =>{
+      return (timestampSevenDays <= temp.a);
+    });
+    const sevenDaysDataAll = sevenDaysDataTimestamp.map(temp =>({a: new Date(temp.a), b: temp.b}));
+    const sevenDaysData = sevenDaysDataAll.filter(temp => {
+      return(
+        ((temp.a.getHours() % 2) === 0) && (temp.a.getMinutes() === 0)
+      );
     })
 
     return (
