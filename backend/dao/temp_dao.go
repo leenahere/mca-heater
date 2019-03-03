@@ -29,6 +29,22 @@ const (
 	DAYCOLLECTION = "daysettings"
 )
 
+const (
+	PARTYCOLLECTION = "party"
+)
+
+const (
+	CAPACITORCOLLECTION = "capacitor"
+)
+
+const (
+	COSTCOLLECTION = "costs"
+)
+
+const (
+	CONSUMPTIONCOLLECTION = "consumption"
+)
+
 // Connect establishes a connection to database
 func (m *TempDAO) Connect() {
 	session, err := mgo.Dial(m.Server)
@@ -87,6 +103,55 @@ func (m *TempDAO) FindDay() ([]DayNight, error) {
 	var daynight []DayNight
 	err := db.C(DAYCOLLECTION).Find(bson.M{}).All(&daynight)
 	return daynight, err
+}
+
+func (m *TempDAO) InsertCosts(costs Costs) error {
+	err := db.C(COSTCOLLECTION).Insert(&costs)
+	return err
+}
+
+func (m *TempDAO) InsertCapacitor(capacitor Capacitor) error {
+	err := db.C(CAPACITORCOLLECTION).Insert(&capacitor)
+	return err
+}
+
+func (m *TempDAO) InsertConsumption(consumption Consumption) error {
+	err := db.C(CONSUMPTIONCOLLECTION).Insert(&consumption)
+	return err
+}
+
+func (m *TempDAO) InsertParty(party Party) error {
+	err := db.C(PARTYCOLLECTION).Insert(&party)
+	return err
+}
+
+func (m *TempDAO) FindCosts() ([]Costs, error) {
+	var costs []Costs
+	err := db.C(COSTCOLLECTION).Find(bson.M{}).All(&costs)
+	return costs, err
+}
+
+func (m *TempDAO) FindCapacitor() ([]Capacitor, error) {
+	var capacitor []Capacitor
+	err := db.C(CAPACITORCOLLECTION).Find(bson.M{}).All(&capacitor)
+	return capacitor, err
+}
+
+func (m *TempDAO) FindConsumption() ([]Consumption, error) {
+	var consumption []Consumption
+	err := db.C(CONSUMPTIONCOLLECTION).Find(bson.M{}).All(&consumption)
+	return consumption, err
+}
+
+func (m *TempDAO) FindParty() ([]Party, error) {
+	var party []Party
+	err := db.C(PARTYCOLLECTION).Find(bson.M{}).All(&party)
+	return party, err
+}
+
+func (m *TempDAO) UpdateParty(party Party) error {
+	err := db.C(PARTYCOLLECTION).UpdateId(party.ID, &party)
+	return err
 }
 
 // // Find a movie by its id
