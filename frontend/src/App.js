@@ -13,6 +13,7 @@ import CurrentTemp from './components/CurrentTemp';
 import Stats from './components/Stats';
 import Settings from './components/Settings';
 import Capacitor from './components/Capacitor';
+import Consumption from './components/Consumption';
 import Party from './components/Party';
 
 import './App.css';
@@ -29,6 +30,7 @@ class App extends Component {
     temps: [],
     tempTargets: [],
     daySettings: [],
+    capacitorValues: [],
     currTemp: null,
     value: 2,
     party: false,
@@ -138,6 +140,14 @@ class App extends Component {
     .catch(error => {
       console.log(error);
     });
+
+    axios.get('http://localhost:3000/capacitor')
+    .then(res => this.setState({
+      capacitorValues: res.data,
+    }))
+    .catch(error => {
+      console.log(error);
+    });
   }
 
   render() {
@@ -159,15 +169,15 @@ class App extends Component {
                     classes={{ indicator: classes.indicator }}
                     onChange={this.handleChange}>
                 <Tab disableRipple style={tabStyle} label="Statistics" />
-                <Tab disableRipple style={tabStyle} label="Expenditure & Costs" />
+                <Tab disableRipple style={tabStyle} label="Consumption & Costs" />
                 <Tab disableRipple style={tabStyle} label="Settings" />
                 <Tab disableRipple style={tabStyle} label="Capacitor" />
               </Tabs>
             </AppBar>
             {value === 0 && <Stats temps={ this.state.temps } />}
-            {value === 1 && <h1>HI</h1>}
+            {value === 1 && <Consumption />}
             {value === 2 && <Settings updateTempTargets={ this.updateTempTargets } tempTargets={ this.state.tempTargets} daySettings= {this.state.daySettings}/>}
-            {value === 3 && <Capacitor />}
+            {value === 3 && <Capacitor capacitorValues={ this.state.capacitorValues }/>}
           </div>;
     }
 

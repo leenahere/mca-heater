@@ -8,18 +8,6 @@ import {
 } from 'victory';
 
 class TodayStats extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      zoomDomain: { x: [new Date(2019, 1, 1), new Date(2019, 2, 25)] },
-
-    };
-  }
-
-  handleZoom(domain) {
-    this.setState({ zoomDomain: domain });
-  }
-
   render() {
     const tempData = this.props.temps.map(temp => ({a: new Date(temp.timestamp*1000),b: parseFloat(temp.temp)}));
     const currentDate = new Date();

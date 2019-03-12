@@ -11,8 +11,8 @@ import (
 )
 
 func main() {
-	var timestamp = 1551225600
-	var end = 1551286050
+	var timestamp = 1551603815
+	var end = 1552305471
 
 	for timestamp < end {
 		fmt.Println("Starting the application...")

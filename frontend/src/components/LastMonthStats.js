@@ -9,18 +9,6 @@ import {
 } from 'victory';
 
 class LastMonthStats extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      zoomDomain: { x: [new Date(2019, 1, 1), new Date(2019, 2, 25)] },
-
-    };
-  }
-
-  handleZoom(domain) {
-    this.setState({ zoomDomain: domain });
-  }
-
   render() {
     const tempData = this.props.temps.map(temp => ({a: temp.timestamp*1000,b: parseFloat(temp.temp)}));
     const currentDate = new Date();
@@ -32,7 +20,8 @@ class LastMonthStats extends React.Component {
     const lastMonthDataAll = lastMonthDataTimestamp.map(temp =>({a: new Date(temp.a), b: temp.b}));
     const monthData = lastMonthDataAll.filter(temp => {
       return(
-        ((temp.a.getHours() % 4) === 0) && (temp.a.getMinutes() === 0)
+        // Just for now use all data from minute 0 and 1, since generated data was wrong
+        ((temp.a.getHours() % 4) === 0) && ((temp.a.getMinutes() === 1) || (temp.a.getMinutes() === 0))
       );
     })
 
