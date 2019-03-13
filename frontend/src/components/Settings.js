@@ -31,14 +31,14 @@ class Settings extends React.Component {
   state = {
     valueDay: this.props.tempTargets[1].targettemp,
     valueNight: this.props.tempTargets[2].targettemp,
-    dayStart: this.props.daySettings[0].daystart,
-    dayEnd: this.props.daySettings[0].dayend,
-    dayStartString: (this.props.daySettings[0].daystart.length > 1)
-      ? `${this.props.daySettings[0].daystart}:00`
-      : `0${this.props.daySettings[0].daystart}:00`,
-    dayEndString: (this.props.daySettings[0].dayend.length > 1)
-      ? `${this.props.daySettings[0].dayend}:00`
-      : `0${this.props.daySettings[0].dayend}:00`,
+    dayStart: this.props.daySettings.daystart,
+    dayEnd: this.props.daySettings.dayend,
+    dayStartString: (this.props.daySettings.daystart.length > 1)
+      ? `${this.props.daySettings.daystart}:00`
+      : `0${this.props.daySettings.daystart}:00`,
+    dayEndString: (this.props.daySettings.dayend.length > 1)
+      ? `${this.props.daySettings.dayend}:00`
+      : `0${this.props.daySettings.dayend}:00`,
   };
 
   handleChangeDay = (event, valueDay) => {

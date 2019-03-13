@@ -48,11 +48,12 @@ class App extends Component {
 
   // Very yucky solution, but it works. Would be better to change data model for targets in database
   updateTempTargets = (valueDay, valueNight, dayStart, dayEnd) => {
+    var locationUrl = 'http://'  + window.location.hostname + ':3000';
     var targetid = ""+this.state.tempTargets[1].id;
     var target = ""+valueDay;
     var modus = ""+this.state.tempTargets[1].mode;
 
-    axios.put('http://localhost:3000/targets', {
+    axios.put(locationUrl + '/targets', {
       "id": targetid,
       "targettemp": target,
       "mode": modus
@@ -63,7 +64,7 @@ class App extends Component {
     target = ""+valueNight;
     modus = ""+this.state.tempTargets[2].mode;
 
-    axios.put('http://localhost:3000/targets', {
+    axios.put(locationUrl + '/targets', {
       "id": targetid,
       "targettemp": target,
       "mode": modus
@@ -78,11 +79,11 @@ class App extends Component {
       tempTargets: update(this.state.tempTargets, {2: {targettemp: {$set: valueNight}}})
     })
 
-    var dayid = ""+this.state.daySettings[0].id;
+    var dayid = ""+this.state.daySettings.id;
     var start = ""+dayStart;
     var end = ""+dayEnd;
 
-    axios.put('http://localhost:3000/daysettings', {
+    axios.put(locationUrl + '/daysettings', {
       "id": dayid,
       "daystart": start,
       "dayend": end
@@ -90,7 +91,7 @@ class App extends Component {
     .then(res => console.log(res))
 
     this.setState({
-      daySettings: update(this.state.daySettings, {0: {daystart: {$set: dayStart}, dayend: {$set: dayEnd}}})
+      daySettings: update(this.state.daySettings, {daystart: {$set: dayStart}, dayend: {$set: dayEnd}})
     })
   }
 
@@ -100,18 +101,19 @@ class App extends Component {
     axios.get(locationUrl + '/heater')
         .then(res => this.setState({
           temps: res.data,
-          currTemp: res.data.find(function(o){
-            //TODO irgendwie funktioniert die Max Funktion nicht
-            return o.timestamp = Math.max.apply(Math, res.data.map(function(o) {
-                console.log(o.timestamp);
-                return o.timestamp;
-              }))
-            }).temp,
-            loading: false
+          loading: false
         }))
         .catch(error => {
           console.log(error);
         });
+
+    axios.get(locationUrl + '/heater-latest')
+    .then(res => this.setState({
+      currTemp: res.data.temp,
+    }))
+    .catch(error => {
+      console.log(error);
+    });
 
     axios.get(locationUrl + '/targets')
     .then(res => this.setState({

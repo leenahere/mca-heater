@@ -26,6 +26,15 @@ func AllTempsEndPoint(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, temperatures)
 }
 
+func LatestTempEndPoint(w http.ResponseWriter, r *http.Request) {
+	temperature, err := dao.FindLatest()
+	if err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	respondWithJson(w, http.StatusOK, temperature)
+}
+
 // CreateTempEndPoint posts new measured temperature
 func CreateTempEndPoint(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
@@ -316,6 +325,7 @@ func main() {
 	r.HandleFunc("/consumption", CreateConsumptionEndPoint).Methods("POST")
 	r.HandleFunc("/capacitor", AllCapacitorEndPoint).Methods("GET")
 	r.HandleFunc("/capacitor", CreateCapacitorEndPoint).Methods("POST")
+	r.HandleFunc("/heater-latest", LatestTempEndPoint).Methods("GET")
 	// r.HandleFunc("/movies", DeleteMovieEndPoint).Methods("DELETE")
 	// r.HandleFunc("/movies/{id}", FindMovieEndpoint).Methods("GET")
 	if err := http.ListenAndServe(":3000", r); err != nil {

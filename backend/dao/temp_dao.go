@@ -61,6 +61,12 @@ func (m *TempDAO) FindAll() ([]Temp, error) {
 	return temperatures, err
 }
 
+func (m *TempDAO) FindLatest() (Temp, error) {
+	var temperature Temp
+	err := db.C(COLLECTION).Find(bson.M{}).Sort("-timestamp").Limit(1).One(&temperature)
+	return temperature, err
+}
+
 // Insert inserts temperature into database
 func (m *TempDAO) Insert(temperature Temp) error {
 	err := db.C(COLLECTION).Insert(&temperature)
@@ -99,9 +105,9 @@ func (m *TempDAO) FindTargets() ([]TargetTemp, error) {
 }
 
 // FindDay finds current daytime settings
-func (m *TempDAO) FindDay() ([]DayNight, error) {
-	var daynight []DayNight
-	err := db.C(DAYCOLLECTION).Find(bson.M{}).All(&daynight)
+func (m *TempDAO) FindDay() (DayNight, error) {
+	var daynight DayNight
+	err := db.C(DAYCOLLECTION).Find(bson.M{}).One(&daynight)
 	return daynight, err
 }
 
