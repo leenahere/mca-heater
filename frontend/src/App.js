@@ -111,7 +111,8 @@ class App extends Component {
 
   componentDidMount() {
     console.log("Component did mount hello");
-    axios.get('http://localhost:3000/heater')
+    var locationUrl = 'http://'  + window.location.hostname + ':3000';
+    axios.get(locationUrl + '/heater')
         .then(res => this.setState({
           temps: res.data,
           currTemp: res.data.find(function(o){
@@ -125,7 +126,7 @@ class App extends Component {
           console.log(error);
         });
 
-    axios.get('http://localhost:3000/targets')
+    axios.get(locationUrl + '/targets')
     .then(res => this.setState({
       tempTargets: res.data,
     }))
@@ -133,7 +134,7 @@ class App extends Component {
       console.log(error);
     });
 
-    axios.get('http://localhost:3000/daysettings')
+    axios.get(locationUrl + '/daysettings')
     .then(res => this.setState({
       daySettings: res.data,
     }))
@@ -141,7 +142,7 @@ class App extends Component {
       console.log(error);
     });
 
-    axios.get('http://localhost:3000/capacitor')
+    axios.get(locationUrl + '/capacitor')
     .then(res => this.setState({
       capacitorValues: res.data,
     }))

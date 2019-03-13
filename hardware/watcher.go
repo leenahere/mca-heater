@@ -2,7 +2,8 @@ package main
 
 import (
         "fmt"
-        "time"
+       // "time"
+        "os/exec"
 
         "github.com/warthog618/gpio"
 )
@@ -17,11 +18,19 @@ func main() {
         pin.Input()
         pin.PullUp()
         pin.Watch(gpio.EdgeBoth, func(pin *gpio.Pin) {
-                fmt.Printf("pin: %v", pin.Read())
+                fmt.Println("pin: ", pin.Read())
+                if(pin.Read()) {
+                        pin.Unwatch()
+                        fmt.Println("Triggered shutdown")
+                        cmd := exec.Command("/bin/sh", "etc/triggershutdown.sh")
+                        cmd.Run()
+                }
         })
 
         defer pin.Unwatch()
 
-        fmt.Println("Watching Pin 7...")
-        time.Sleep(time.Minute)
+        fmt.Println("Watching Pin 11...")
+	for {
+        
+        }
 }
