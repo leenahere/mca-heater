@@ -47,21 +47,10 @@ class App extends Component {
   };
 
   // Very yucky solution, but it works. Would be better to change data model for targets in database
-  updateTempTargets = (valueCurrent, valueDay, valueNight, dayStart, dayEnd) => {
-    var targetid = ""+this.state.tempTargets[0].id;
-    var target = ""+valueCurrent;
-    var modus = ""+this.state.tempTargets[0].mode;
-
-    axios.put('http://localhost:3000/targets', {
-      "id": targetid,
-      "targettemp": target,
-      "mode": modus
-    })
-    .then(res => console.log(res))
-
-    targetid = ""+this.state.tempTargets[1].id;
-    target = ""+valueDay;
-    modus = ""+this.state.tempTargets[1].mode;
+  updateTempTargets = (valueDay, valueNight, dayStart, dayEnd) => {
+    var targetid = ""+this.state.tempTargets[1].id;
+    var target = ""+valueDay;
+    var modus = ""+this.state.tempTargets[1].mode;
 
     axios.put('http://localhost:3000/targets', {
       "id": targetid,
@@ -80,10 +69,6 @@ class App extends Component {
       "mode": modus
     })
     .then(res => console.log(res))
-
-    this.setState({
-      tempTargets: update(this.state.tempTargets, {0: {targettemp: {$set: valueCurrent}}})
-    })
 
     this.setState({
       tempTargets: update(this.state.tempTargets, {1: {targettemp: {$set: valueDay}}})
@@ -116,7 +101,9 @@ class App extends Component {
         .then(res => this.setState({
           temps: res.data,
           currTemp: res.data.find(function(o){
+            //TODO irgendwie funktioniert die Max Funktion nicht
             return o.timestamp = Math.max.apply(Math, res.data.map(function(o) {
+                console.log(o.timestamp);
                 return o.timestamp;
               }))
             }).temp,

@@ -29,7 +29,6 @@ const styles = theme => ({
 
 class Settings extends React.Component {
   state = {
-    valueCurrent: this.props.tempTargets[0].targettemp,
     valueDay: this.props.tempTargets[1].targettemp,
     valueNight: this.props.tempTargets[2].targettemp,
     dayStart: this.props.daySettings[0].daystart,
@@ -40,11 +39,6 @@ class Settings extends React.Component {
     dayEndString: (this.props.daySettings[0].dayend.length > 1)
       ? `${this.props.daySettings[0].dayend}:00`
       : `0${this.props.daySettings[0].dayend}:00`,
-  };
-
-  handleChangeCurrent = (event, valueCurrent) => {
-    this.setState({ valueCurrent });
-    console.log(valueCurrent);
   };
 
   handleChangeDay = (event, valueDay) => {
@@ -59,28 +53,12 @@ class Settings extends React.Component {
 
   render () {
 
-    const {valueCurrent, valueDay, valueNight, dayStart, dayEnd, dayStartString, dayEndString} = this.state;
+    const {valueDay, valueNight, dayStart, dayEnd, dayStartString, dayEndString} = this.state;
     const { classes } = this.props;
 
     return(
       <div>
       <div style={containerStyle}>
-        <div style={settingStyle}>
-          <div style={tagSettingStyle}>
-            <h3>Current</h3>
-            <div style={tempSetFieldStyle}>{(valueCurrent === 0) ? 'Off' : valueCurrent}&#8451;</div>
-          </div>
-          <MuiThemeProvider theme={muiTheme}>
-          <Slider
-            value={valueCurrent}
-            min={0}
-            max={30}
-            step={0.5}
-            aria-labelledby="label"
-            onChange={this.handleChangeCurrent}
-            />
-        </MuiThemeProvider>
-        </div>
         <div style={settingStyle} >
           <div style={tagSettingStyle}>
             <h3>Day</h3>
@@ -159,7 +137,7 @@ class Settings extends React.Component {
         Um die Einstellungen zu ändern, einfach den Einstellungen ändern Button klicken.
       </div>
       <div>
-        <button style={btnStyle} onClick={this.props.updateTempTargets.bind(this, valueCurrent, valueDay, valueNight, dayStart, dayEnd)}>Apply</button>
+        <button style={btnStyle} onClick={this.props.updateTempTargets.bind(this, valueDay, valueNight, dayStart, dayEnd)}>Apply</button>
       </div>
       </div>
     );

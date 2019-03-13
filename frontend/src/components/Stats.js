@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import TodayStats from './TodayStats';
 import LastSevenStats from './LastSevenStats';
 import LastMonthStats from './LastMonthStats';
+import LastHourStats from './LastHourStats';
 import AllStats from './AllStats';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -34,16 +35,16 @@ class Stats extends React.Component {
       <div>
         <AppBar style={appBarStyle} position="static">
           <Tabs value={value} classes={{ indicator: classes.indicator }} onChange={this.handleChange}>
-            <Tab disableRipple style={tabAddStyle} label="Today" />
+            <Tab disableRipple style={tabAddStyle} label="Last Hour" />
+            <Tab disableRipple style={tabStyle} label="Today" />
             <Tab disableRipple style={tabStyle} label="Last Week" />
             <Tab disableRipple style={tabStyle} label="Last Month" />
-            <Tab disableRipple style={tabStyle} label="All" />
           </Tabs>
         </AppBar>
-        {value === 0 && <TodayStats temps={ this.props.temps } />}
-        {value === 1 && <LastSevenStats temps={ this.props.temps } />}
-        {value === 2 && <LastMonthStats temps={ this.props.temps } />}
-        {value === 3 && <AllStats temps={ this.props.temps } />}
+        {value === 0 && <LastHourStats temps={ this.props.temps } />}
+        {value === 1 && <TodayStats temps={ this.props.temps } />}
+        {value === 2 && <LastSevenStats temps={ this.props.temps } />}
+        {value === 3 && <LastMonthStats temps={ this.props.temps } />}
       </div>
     );
   }
