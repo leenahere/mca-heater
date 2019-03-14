@@ -20,7 +20,6 @@ func main() {
         pin.Watch(gpio.EdgeBoth, func(pin *gpio.Pin) {
                 fmt.Println("pin: ", pin.Read())
                 if(pin.Read()) {
-                        pin.Unwatch()
                         fmt.Println("Triggered shutdown")
                         cmd := exec.Command("/bin/sh", "etc/triggershutdown.sh")
                         cmd.Run()

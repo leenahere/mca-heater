@@ -88,7 +88,7 @@ func isParty() bool {
 	} else {
 		data, _ := ioutil.ReadAll(response.Body)
 		var party Party
-		_ = json.Unmarshal([]byte(data), &Party)
+		_ = json.Unmarshal([]byte(data), &party)
 		return party.PartyOn
 	}
 

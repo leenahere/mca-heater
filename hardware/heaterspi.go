@@ -29,7 +29,7 @@ func postNewTempData(i float64) {
 }
 
 func postNewCapacitorData(i float64) {
-	jsonData := map[string]string{"loadingvalue": strconv.FormatFloat(i, 'f', 1, 64), "timestamp": strconv.FormatInt(time.Now().Unix(), 10)}
+	jsonData := map[string]int{"loadingvalue": int(i), "timestamp": int(time.Now().Unix())}
 	jsonValue, _ := json.Marshal(jsonData)
 	response, err := http.Post("http://localhost:3000/capacitor", "application/json", bytes.NewBuffer(jsonValue))
 	if err != nil {
