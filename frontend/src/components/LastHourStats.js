@@ -13,11 +13,11 @@ class LastHourStats extends React.Component {
     const tempData = this.props.temps.map(temp => ({a: temp.timestamp*1000,b: parseFloat(temp.temp)}));
     const currentDate = new Date();
     const currentDateTimestamp = currentDate.getTime();
-    const timesstampLastMonth = currentDateTimestamp - (60 * 60 * 1000);
-    const lastMonthDataTimestamp = tempData.filter(temp =>{
-      return (timesstampLastMonth <= temp.a);
+    const timesstampLastHour = currentDateTimestamp - (60 * 60 * 1000);
+    const lastHourDataTimestamp = tempData.filter(temp =>{
+      return (timesstampLastHour <= temp.a);
     });
-    const lastMonthDataAll = lastMonthDataTimestamp.map(temp =>({a: new Date(temp.a), b: temp.b}));
+    const lastHourDataAll = lastHourDataTimestamp.map(temp =>({a: new Date(temp.a), b: temp.b}));
 
     return (
       <div>
@@ -27,20 +27,10 @@ class LastHourStats extends React.Component {
                 data: { stroke: "#f76c6c" },
                 labels: {display: "none"}
               }}
-              data={ lastMonthDataAll }
+              data={ lastHourDataAll }
               x="a"
               y="b"
             />
-            <VictoryScatter
-              labels={(d) => `${d.a.getDate()}.${d.a.getMonth()+1}\n${d.a.getHours()} Uhr\n${d.b} C`}
-              labelComponent={<VictoryTooltip/>}
-              style={{ data: { fill: "#f76c6c" }
-                    }}
-              size={ lastMonthDataAll.size }
-              data={ lastMonthDataAll }
-              x="a"
-              y="b"
-              />
 
           </VictoryChart>
       </div>

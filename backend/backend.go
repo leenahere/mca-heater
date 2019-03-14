@@ -308,6 +308,7 @@ func main() {
 	r.HandleFunc("/targets", handlePreflight).Methods("OPTIONS")
 	r.HandleFunc("/daysettings", handlePreflight).Methods("OPTIONS")
 	r.HandleFunc("/party", handlePreflight).Methods("OPTIONS")
+	r.HandleFunc("/party", handlePreflight).Methods("OPTIONS")
 	r.HandleFunc("/heater", AllTempsEndPoint).Methods("GET")
 	r.HandleFunc("/heater", CreateTempEndPoint).Methods("POST")
 	r.HandleFunc("/targets", AllTargetTempsEndPoint).Methods("GET")

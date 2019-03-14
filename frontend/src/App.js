@@ -34,6 +34,8 @@ class App extends Component {
     currTemp: null,
     value: 2,
     party: false,
+    partyid: "",
+    partywow: [],
   }
 
   handleChange = (event, value) => {
@@ -43,6 +45,20 @@ class App extends Component {
   onParty = (event) => {
     var currentParty = this.state.party;
     currentParty = !currentParty
+
+    var locationUrl = 'http://'  + window.location.hostname + ':3000';
+    var idparty = ""+this.state.partyid;
+    var party = currentParty;
+
+    console.log(idparty);
+    console.log(party);
+
+    axios.put(locationUrl + '/party', {
+      "id": idparty,
+      "partyon": party,
+    })
+    .then(res => console.log(res))
+
     this.setState({ party: currentParty});
   };
 
@@ -134,6 +150,16 @@ class App extends Component {
     axios.get(locationUrl + '/capacitor')
     .then(res => this.setState({
       capacitorValues: res.data,
+    }))
+    .catch(error => {
+      console.log(error);
+    });
+
+    axios.get(locationUrl + '/party')
+    .then(res => this.setState({
+      party: res.data[0].partyon,
+      partyid: res.data[0].id,
+      partywow: res.data,
     }))
     .catch(error => {
       console.log(error);

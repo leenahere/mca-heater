@@ -33,20 +33,11 @@ class LastMonthStats extends React.Component {
                 data: { stroke: "#f76c6c" },
                 labels: {display: "none"}
               }}
-              data={ monthData }
+              data={ lastMonthDataAll }
               x="a"
               y="b"
             />
-            <VictoryScatter
-              labels={(d) => `${d.a.getDate()}.${d.a.getMonth()+1}\n${d.a.getHours()} Uhr\n${d.b} C`}
-              labelComponent={<VictoryTooltip/>}
-              style={{ data: { fill: "#f76c6c" }
-                    }}
-              size={ monthData.size }
-              data={ monthData }
-              x="a"
-              y="b"
-              />
+
 
           </VictoryChart>
       </div>

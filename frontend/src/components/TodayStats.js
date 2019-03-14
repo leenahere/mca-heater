@@ -9,11 +9,19 @@ import {
 
 class TodayStats extends React.Component {
   render() {
-    const tempData = this.props.temps.map(temp => ({a: new Date(temp.timestamp*1000),b: parseFloat(temp.temp)}));
+    const tempData = this.props.temps.map(temp => ({a: temp.timestamp*1000,b: parseFloat(temp.temp)}));
     const currentDate = new Date();
+    const currentDateTimestamp = currentDate.getTime();
+    const timesstampDay = currentDateTimestamp - (24 * 60 * 60 * 1000);
     const todayData = tempData.filter(temp =>{
-      return ((temp.a.getFullYear() === currentDate.getFullYear()) && (temp.a.getMonth() === currentDate.getMonth()) && (temp.a.getDate() === currentDate.getDate()));
-    })
+      return (timesstampDay <= temp.a);
+    });
+
+    // const tempData = this.props.temps.map(temp => ({a: new Date(temp.timestamp*1000),b: parseFloat(temp.temp)}));
+    // const currentDate = new Date();
+    // const todayData = tempData.filter(temp =>{
+    //   return ((temp.a.getFullYear() === currentDate.getFullYear()) && (temp.a.getMonth() === currentDate.getMonth()) && (temp.a.getDate() === currentDate.getDate()));
+    // })
 
     // const testData = [
     //   { a: new Date(2018, 1, 1), b: 125 },
@@ -40,13 +48,6 @@ class TodayStats extends React.Component {
               x="a"
               y="b"
             />
-            <VictoryScatter
-              style={{ data: { fill: "#f76c6c" } }}
-              size={ todayData.size }
-              data={ todayData }
-              x="a"
-              y="b"
-              />
 
           </VictoryChart>
       </div>

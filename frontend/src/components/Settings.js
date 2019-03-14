@@ -127,13 +127,10 @@ class Settings extends React.Component {
         </div>
       </div>
       <div style={explanStyle}>
-        In den Einstellungen können die verschiedenen Zieltemperaturen eingestellt werden.
-        Die Einstellung der aktuellen Temperatur überschreibt, ja was eigentlich? Vielleicht
-        nehmen wir aktuelle Temp einfach raus, das macht nicht wirklich Sinn.
-        Dabei können Werte von 0&#8451; bis 30&#8451; eingestellt werden. So oft das Wort
-        einstellen. Zusätzlich kann eingestelt werden, von wann bis wann die Temperatur
+        In den Einstellungen können die verschiedenen Zieltemperaturen für Tag und Nacht eingestellt werden.
+        Dabei können Werte von 0&#8451; bis 30&#8451; eingestellt werden. Zusätzlich kann eingestelt werden, von wann bis wann die Temperatur
         für den Tag gelten soll. Die Zeiten für die Nacht errechnen sich automatisch aus den
-        verbleibenden der 24 Stunden eines Tages, die zumindest in unserer Welt also normal gelten.
+        verbleibenden der 24 Stunden eines Tages, die zumindest in unserer Welt gelten.
         Um die Einstellungen zu ändern, einfach den Einstellungen ändern Button klicken.
       </div>
       <div>

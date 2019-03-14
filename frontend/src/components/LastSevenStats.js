@@ -38,20 +38,11 @@ class LastSevenStats extends React.Component {
                 data: { stroke: "#f76c6c" },
                 labels: {display: "none"}
               }}
-              data={ sevenDaysData }
+              data={ sevenDaysDataAll }
               x="a"
               y="b"
             />
-            <VictoryScatter
-              labels={(d) => `${d.a.getHours()} Uhr\n${d.b} C`}
-              labelComponent={<VictoryTooltip/>}
-              style={{ data: { fill: "#f76c6c" }
-                    }}
-              size={ sevenDaysData.size }
-              data={ sevenDaysData }
-              x="a"
-              y="b"
-              />
+
 
           </VictoryChart>
       </div>

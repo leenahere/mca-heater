@@ -9,15 +9,17 @@ import {
 
 class Capacitor extends React.Component {
   render() {
-    const tempData = this.props.capacitorValues.map(temp => ({a: new Date(temp.timestamp*1000),b: temp.loadingvalue}));
+    const capacitorData = this.props.capacitorValues.map(temp => ({a: new Date(temp.timestamp*1000),b: temp.loadingvalue}));
     const currentDate = new Date();
-    const todayData = tempData.filter(temp =>{
-      return ((temp.a.getFullYear() === currentDate.getFullYear()) && (temp.a.getMonth() === currentDate.getMonth()) && (temp.a.getDate() === currentDate.getDate()));
-    })
+    const currentDateTimestamp = currentDate.getTime();
+    const timestampDay = currentDateTimestamp - (24 * 60 * 60 * 1000);
+    const todayData = capacitorData.filter(temp =>{
+      return (timestampDay <= temp.a);
+    });
 
     return (
       <div>
-        <VictoryChart width={900} height={470} scale={{ x: "time" }} domain={{ y: [0.0,30.0] }}
+        <VictoryChart width={900} height={470} scale={{ x: "time" }} domain={{ y: [0.0,5.0] }}
         >
             <VictoryLine
               style={{
@@ -27,13 +29,6 @@ class Capacitor extends React.Component {
               x="a"
               y="b"
             />
-            <VictoryScatter
-              style={{ data: { fill: "#f76c6c" } }}
-              size={ todayData.size }
-              data={ todayData }
-              x="a"
-              y="b"
-              />
 
           </VictoryChart>
       </div>
