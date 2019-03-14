@@ -65,6 +65,7 @@ func isDay() bool {
 		end, _ := strconv.Atoi(daySettings.DayEnd)
 
 		if isParty() {
+			fmt.Println("is in if isParty")
 			return true
 		}
 
@@ -78,6 +79,7 @@ func isDay() bool {
 			}
 		}
 	}
+	fmt.Println("didnt fine any settings returns false")
 	return false
 }
 
@@ -103,13 +105,17 @@ func getCurrentTarget() float64 {
 		data, _ := ioutil.ReadAll(response.Body)
 		var targets []TargetTemp
 		_ = json.Unmarshal([]byte(data), &targets)
+		fmt.Println(targets)
 
+		if len(targets) > 0 {
 		if isDay() {
 			temp, _ := strconv.ParseFloat(targets[1].TargetTemp, 64)
+			fmt.Println(temp)
 			return temp
-		} else {
-			temp, _ := strconv.ParseFloat(targets[2].TargetTemp, 64)
-			return temp
+		}
+		temp, err := strconv.ParseFloat(targets[2].TargetTemp, 64)
+		fmt.Println(err)
+		return temp
 		}
 	}
 	return 0.0
