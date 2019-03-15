@@ -21,7 +21,7 @@ class LastHourStats extends React.Component {
 
     return (
       <div>
-        <VictoryChart width={900} height={470} scale={{ x: "time" }} domain={{ y: [0.0,30.0] }}>
+        <VictoryChart width={900} height={470} scale={{ x: "time" }} domain={{ y: [0.0,35.0] }}>
             <VictoryLine
               style={{
                 data: { stroke: "#f76c6c" },
